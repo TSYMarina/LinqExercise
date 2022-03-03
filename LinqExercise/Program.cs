@@ -11,6 +11,10 @@ namespace LinqExercise
 
         static void Main(string[] args)
         {
+
+            var squares = Enumerable.Range(1, 100).Average(x => x * x);
+            Console.WriteLine(squares);
+
             /*
              * 
              * Complete every task using Method OR Query syntax.
@@ -35,13 +39,30 @@ namespace LinqExercise
             Console.WriteLine("\nNumbers array in ascending order: ");
             numbers.OrderBy(x => x).ToList().ForEach(x => Console.WriteLine(x));
 
+            // Query Syntax:
+            // var x = from number in numbers
+            //         orderby number descending
+            //         select number;
+            //foreach (var num in x)
+            //{
+            // Console.WriteLine(num);
+            //}
+
+
+
             //Print to the console only the numbers greater than 6
             Console.WriteLine("\nNumbers from the list that are  greater than 6: ");
             numbers.Where(x => x > 6).ToList().ForEach(x => Console.WriteLine(x));
 
+            //Query Syntax
+            //var querySyntax = from num in numbers
+            //                  where num > 6
+            //                  select num;
+
+
             //Order numbers in any order (acsending or desc) but only print 4 of them **foreach loop only!**
             Console.WriteLine("\n4 numbers from the given array: ");
-            foreach (var num in numbers.Take(4))
+            foreach (var num in numbers.Take(4).OrderBy(x => x))
             {
                 Console.WriteLine(num);
             }
@@ -55,7 +76,6 @@ namespace LinqExercise
                 Console.WriteLine(number);
             }
 
-
             // List of employees ***Do not remove this***
             var employees = CreateEmployees();
 
@@ -68,7 +88,8 @@ namespace LinqExercise
                     Console.Write ($"First Name: {x.FirstName}  ");
                     Console.WriteLine($"Last Name: {x.LastName}");
                 });
-
+             //Alternative: employees.Where(emp => emp.FirstName[0] == 'C' || emp.FirstName[0] == 'S')... print as usual
+         
 
             //Print all the employees' FullName and Age who are over the age 26 to the console.
             //Order this by Age first and then by FirstName in the same result.
@@ -79,8 +100,6 @@ namespace LinqExercise
                 Console.WriteLine($"Full Name: {x.LastName}, {x.FirstName} Employee Age: {x.Age};");
             });
 
-
-
             //Print the Sum and then the Average of the employees' YearsOfExperience
             //if their YOE is less than or equal to 10 AND Age is greater than 35
             Console.WriteLine("\n\n");
@@ -90,15 +109,20 @@ namespace LinqExercise
             double avgYoExp = answer.Average(x => x.YearsOfExperience);
             Console.WriteLine($"Average of Years of experience: {avgYoExp}");
 
-            Console.WriteLine("\n\n <3  Thank You! This was fun!  <3");
-
+            
             //Add an employee to the end of the list without using employees.Add()
+            //first solution prints the list with addition but does not make the addition permanent:
+            employees.Append(new Employee("Tanner", "Gilmer", 32, 4)).ToList().ForEach(x => Console.WriteLine(x.Age FullName));
 
+            // to make the additions permanent:
+            // employees = employees.Append(new Employee("Tanner", "Gilmer", 32, 4)).ToList();
+            // ...then foreach() and print 
 
             Console.WriteLine();
 
             Console.ReadLine();
         }
+        Console.WriteLine("\n\n <3  Thank You! This was fun!  <3");
 
         #region CreateEmployeesMethod
         private static List<Employee> CreateEmployees()
